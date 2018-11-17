@@ -138,7 +138,7 @@ class YOLO(object):
             ellipse_y_true = int((box_true[0] + box_true[2]) / 2)
 
             draw.ellipse([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
-                         fill=(128, 128, 128))
+                         fill=(128))
             del draw
 
         for i, c in reversed(list(enumerate(out_classes))):
