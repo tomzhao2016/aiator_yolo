@@ -2,6 +2,7 @@ import sys
 import argparse
 from yolo import YOLO, detect_video
 from PIL import Image
+from yolo3.utils import get_random_data
 
 # def detect_img(yolo):
 #     while True:
@@ -18,18 +19,24 @@ from PIL import Image
 
 # rewrite this function
 def detect_img(yolo):
-    annotation_path = '/home/qingyang/aiator/data/image_annotation.txt'
+    annotation_path = '/home/qingyang/aiator/data/image_annotation_train.txt'
+    with open(annotation_path) as f:
+        lines = f.readlines()
+
+
     for i in range(1,10):
         # img = '/home/qingyang/aiator/data/location_images/train/'+str(i)+'.bmp'
 
+
 #         img = '../data/huizhou/pos1/'+str(i)+'.bmp'
         try:
-            image = Image.open(img)
+            # image = Image.open(img)
+            image, box = get_random_data(lines[i], input_shape=(416, 416), random=True)
         except:
             print('Open Error! Try again!')
             continue
         else:
-            r_image = yolo.detect_image(image)
+            r_image = yolo.detect_image(image,box)
             r_image.save('results_tiny/detected_'+str(i)+'.jpg')
             print(str(i)+' is detected!')
 #     yolo.close_session()
