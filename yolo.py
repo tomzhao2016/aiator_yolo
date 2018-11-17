@@ -156,7 +156,9 @@ class YOLO(object):
             for i in range(thickness):
                 draw.rectangle([left + i, top + i, right - i, bottom - i],outline=(255))
 #                                self.colors[c])
-            draw.point([int((left+right)/2),int((top+bottom)/2)],fill=(0))
+            ellipse_x = int((left + right) / 2)
+            ellipse_y = int((top + bottom) / 2)
+            draw.ellipse([(ellipse_x-5,ellipse_y-5),(ellipse_x+5,ellipse_y+5)],fill=(255))
             draw.rectangle([tuple(text_origin), tuple(text_origin + label_size)],fill=(255))
 #                            self.colors[c])
             draw.text(text_origin, label, fill=(0),font=font)
