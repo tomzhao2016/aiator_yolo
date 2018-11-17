@@ -10,11 +10,11 @@ import os
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 # create new file
-f = open("image_annotation.txt", "x")
-f = open("image_annotation.txt", "a")
+f = open("/home/qingyang/aiator/data/image_annotation.txt", "x")
+f = open("/home/qingyang/aiator/data/image_annotation.txt", "a")
 
 # read loaction file
-l_f = open('location_images/targetLocation.csv','r')
+l_f = open('/home/qingyang/aiator/data/location_images/targetLocation.csv','r')
 
 ####
 #### initialize center_coordinate
