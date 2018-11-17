@@ -2,7 +2,7 @@ import sys
 import argparse
 from yolo import YOLO, detect_video
 from PIL import Image
-from yolo3.utils import get_random_data
+
 
 # def detect_img(yolo):
 #     while True:
@@ -31,7 +31,9 @@ def detect_img(yolo):
 #         img = '../data/huizhou/pos1/'+str(i)+'.bmp'
         try:
             # image = Image.open(img)
-            image, box = get_random_data(lines[i], input_shape=(416, 416), random=True)
+            line = lines[i].split()
+            image = Image.open(line[0])
+            box = [list(map(int, box.split(','))) for box in line[1:]]
         except:
             print('Open Error! Try again!')
             continue

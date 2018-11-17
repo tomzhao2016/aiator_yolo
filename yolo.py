@@ -99,7 +99,7 @@ class YOLO(object):
                 score_threshold=self.score, iou_threshold=self.iou)
         return boxes, scores, classes
 
-    def detect_image(self, image, box):
+    def detect_image(self, image, boxes_true):
         start = timer()
 
         if self.model_image_size != (None, None):
@@ -130,6 +130,17 @@ class YOLO(object):
                     size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
         thickness = (image.size[0] + image.size[1]) // 300
 
+
+        for box_true in boxes_true:
+            draw = ImageDraw.Draw(image)
+
+            ellipse_x_true = int((box_true[1] + box_true[3]) / 2)
+            ellipse_y_true = int((box_true[0] + box_true[2]) / 2)
+
+            draw.ellipse([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
+                         fill=(128, 128, 128))
+            del draw
+
         for i, c in reversed(list(enumerate(out_classes))):
             predicted_class = self.class_names[c]
             box = out_boxes[i]
@@ -140,7 +151,6 @@ class YOLO(object):
             label_size = draw.textsize(label, font)
 
             top, left, bottom, right = box
-            top_true,left_true,bottom_true,right_true = box
             top = max(0, np.floor(top + 0.5).astype('int32'))
             left = max(0, np.floor(left + 0.5).astype('int32'))
             bottom = min(image.size[1], np.floor(bottom + 0.5).astype('int32'))
@@ -159,10 +169,8 @@ class YOLO(object):
 #                                self.colors[c])
             ellipse_x = int((left + right) / 2)
             ellipse_y = int((top + bottom) / 2)
-            ellipse_x_true = int((left_true + right_true) / 2)
-            ellipse_y_true = int((top_true + bottom_true) / 2)
+
             draw.ellipse([(ellipse_x-5,ellipse_y-5),(ellipse_x+5,ellipse_y+5)],fill=(0))
-            draw.ellipse([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)], fill=(128,128,128))
             draw.rectangle([tuple(text_origin), tuple(text_origin + label_size)],fill=(0))
 #                            self.colors[c])
             draw.text(text_origin, label, fill=(255),font=font)
