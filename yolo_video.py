@@ -18,8 +18,8 @@ from PIL import Image
 
 # rewrite this function
 def detect_img(yolo):
-    for i in range(1,105):
-        img = '/home/qingyang/aiator/data/location_images/images/'+str(i)+'.bmp'
+    for i in range(1,10):
+        img = '/home/qingyang/aiator/data/location_images/train/'+str(i)+'.bmp'
 #         img = '../data/huizhou/pos1/'+str(i)+'.bmp'
         try:
             image = Image.open(img)
