@@ -3,24 +3,9 @@ import argparse
 from yolo import YOLO, detect_video
 from PIL import Image
 
-def detect_img(yolo):
-    while True:
-        img = input('Input image filename:')
-        try:
-            image = Image.open(img)
-        except:
-            print('Open Error! Try again!')
-            continue
-        else:
-            r_image = yolo.detect_image(image)
-            r_image.show()
-    yolo.close_session()
-
-# # rewrite this function 
 # def detect_img(yolo):
-#     for i in range(1,105):
-#         img = '../data/location_images/images/'+str(i)+'.bmp'
-# #         img = '../data/huizhou/pos1/'+str(i)+'.bmp'
+#     while True:
+#         img = input('Input image filename:')
 #         try:
 #             image = Image.open(img)
 #         except:
@@ -28,8 +13,23 @@ def detect_img(yolo):
 #             continue
 #         else:
 #             r_image = yolo.detect_image(image)
-#             r_image.save('results/detected_'+str(i)+'.jpg')
-#             print(str(i)+' is detected!')
+#             r_image.show()
+#     yolo.close_session()
+
+# rewrite this function
+def detect_img(yolo):
+    for i in range(1,105):
+        img = '/home/qingyang/aiator/data/location_images/images/'+str(i)+'.bmp'
+#         img = '../data/huizhou/pos1/'+str(i)+'.bmp'
+        try:
+            image = Image.open(img)
+        except:
+            print('Open Error! Try again!')
+            continue
+        else:
+            r_image = yolo.detect_image(image)
+            r_image.save('results_tiny/detected_'+str(i)+'.jpg')
+            print(str(i)+' is detected!')
 #     yolo.close_session()
 
 FLAGS = None
