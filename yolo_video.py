@@ -23,11 +23,10 @@ def detect_img(yolo):
     with open(annotation_path) as f:
         lines = f.readlines()
 
-
     for i in range(1,10):
         # img = '/home/qingyang/aiator/data/location_images/train/'+str(i)+'.bmp'
 
-
+       
 #         img = '../data/huizhou/pos1/'+str(i)+'.bmp'
         try:
             # image = Image.open(img)
