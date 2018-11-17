@@ -46,7 +46,7 @@ def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 100, y_offset = 100):
 
 #
 for cnt in range(1,91):
-    temp_path = os.path.join(CURRENT_PATH, 'location_images/train',str(cnt)+'.bmp')
+    temp_path = os.path.join('/home/qingyang/aiator/data/location_images/train',str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
 
     x_1 = temp_coordinate[0]
