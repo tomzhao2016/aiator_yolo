@@ -137,7 +137,7 @@ class YOLO(object):
             ellipse_x_true = int((box_true[1] + box_true[3]) / 2)
             ellipse_y_true = int((box_true[0] + box_true[2]) / 2)
 
-            draw.ellipse([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
+            draw.rectangle([(ellipse_x_true - 8, ellipse_y_true - 8), (ellipse_x_true + 8, ellipse_y_true + 8)],
                          fill=(128))
             del draw
 
