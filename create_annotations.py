@@ -10,8 +10,11 @@ import os
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 # create new file
-f = open("/home/qingyang/aiator/data/image_annotation.txt", "x")
-f = open("/home/qingyang/aiator/data/image_annotation.txt", "a")
+f_train = open("/home/qingyang/aiator/data/image_annotation_train.txt", "x")
+f_train = open("/home/qingyang/aiator/data/image_annotation_train.txt", "a")
+
+f_test = open("/home/qingyang/aiator/data/image_annotation_test.txt", "x")
+f_test = open("/home/qingyang/aiator/data/image_annotation_test.txt", "a")
 
 # read loaction file
 l_f = open('/home/qingyang/aiator/data/location_images/targetLocation.csv','r')
@@ -40,9 +43,10 @@ def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 100, y_offset = 100):
     y_max = min(y + y_offset, col_size)
     return (int(x_min),int(x_max),int(y_min),int(y_max))
 
+
 #
-for cnt in range(1,105):
-    temp_path = os.path.join(CURRENT_PATH, 'location_images/images',str(cnt)+'.bmp')
+for cnt in range(1,91):
+    temp_path = os.path.join(CURRENT_PATH, 'location_images/train',str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
 
     x_1 = temp_coordinate[0]
@@ -52,7 +56,31 @@ for cnt in range(1,105):
     x_1_min,x_1_max,y_1_min,y_1_max = c2b(x_1,y_1)
     x_2_min,x_2_max,y_2_min,y_2_max = c2b(x_2,y_2)
     content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(1)+'\n'
-    f.write(content_1)
+    f_train.write(content_1)
 
 
+for cnt in range(101,105):
+    temp_path = os.path.join(CURRENT_PATH, 'location_images/train',str(cnt)+'.bmp')
+    temp_coordinate = center_coordinate[cnt]
 
+    x_1 = temp_coordinate[0]
+    y_1 = temp_coordinate[1]
+    x_2 = temp_coordinate[2]
+    y_2 = temp_coordinate[3]
+    x_1_min,x_1_max,y_1_min,y_1_max = c2b(x_1,y_1)
+    x_2_min,x_2_max,y_2_min,y_2_max = c2b(x_2,y_2)
+    content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(1)+'\n'
+    f_train.write(content_1)
+
+for cnt in range(91,101):
+    temp_path = os.path.join(CURRENT_PATH, 'location_images/test',str(cnt)+'.bmp')
+    temp_coordinate = center_coordinate[cnt]
+
+    x_1 = temp_coordinate[0]
+    y_1 = temp_coordinate[1]
+    x_2 = temp_coordinate[2]
+    y_2 = temp_coordinate[3]
+    x_1_min,x_1_max,y_1_min,y_1_max = c2b(x_1,y_1)
+    x_2_min,x_2_max,y_2_min,y_2_max = c2b(x_2,y_2)
+    content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(1)+'\n'
+    f_test.write(content_1)
