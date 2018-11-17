@@ -14,10 +14,10 @@ from yolo3.utils import get_random_data
 
 
 def _main():
-    annotation_path = '../data/image_annotation.txt'
-    log_dir = 'logs/000/'
+    annotation_path = 'home/qingyang/aiator/data/image_annotation.txt'
+    log_dir = 'logs/000_tiny/'
     classes_path = 'model_data/welding_classes.txt'
-    anchors_path = 'model_data/yolo_anchors.txt'
+    anchors_path = 'model_data/tiny_yolo_anchors.txt'
     class_names = get_classes(classes_path)
     num_classes = len(class_names)
     anchors = get_anchors(anchors_path)
