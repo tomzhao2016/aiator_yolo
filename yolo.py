@@ -134,8 +134,8 @@ class YOLO(object):
         for box_true in boxes_true:
             draw = ImageDraw.Draw(image)
 
-            ellipse_x_true = int((box_true[1] + box_true[0]) / 2)
-            ellipse_y_true = int((box_true[3] + box_true[2]) / 2)
+            ellipse_x_true = int((box_true[0] + box_true[2]) / 2)
+            ellipse_y_true = int((box_true[1] + box_true[3]) / 2)
 
             draw.rectangle([(ellipse_x_true - 8, ellipse_y_true - 8), (ellipse_x_true + 8, ellipse_y_true + 8)],
                          fill=(128))
