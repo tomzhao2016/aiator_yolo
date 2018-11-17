@@ -33,6 +33,7 @@ def detect_img(yolo):
             line = lines[i].split()
             image = Image.open(line[0])
             box = [list(map(int, box.split(','))) for box in line[1:]]
+            print(box)
         except:
             print('Open Error! Try again!')
             continue
