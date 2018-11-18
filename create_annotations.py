@@ -95,11 +95,13 @@ for cnt in range(91,101):
 # augmentation including rotation (90 degree)
 
 
+f_train.close()
+f_val.close()
 
-# with open(annotation_path_train) as f_train:
-lines_train = f_train.readlines()
-# with open(annotation_path_test) as f_val:
-lines_val = f_val.readlines()
+with open(annotation_path_train) as f_train:
+    lines_train = f_train.readlines()
+with open(annotation_path_val) as f_val:
+    lines_val = f_val.readlines()
 
 
 # transpose
@@ -132,8 +134,8 @@ for i in range(len(lines_train)):
     image.save(path)
     content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
     # save into annotation
-    # with open(annotation_path_train,'a') as f_train:
-    f_train.write(content)
+    with open(annotation_path_train,'a') as f_train:
+        f_train.write(content)
 
 # transpose
 for i in range(len(lines_val)):
@@ -165,5 +167,5 @@ for i in range(len(lines_val)):
     image.save(path)
     content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
     # save into annotation
-    # with open(annotation_path_test,'a') as f_test:
-    f_val.write(content)
+    with open(annotation_path_val,'a') as f_val:
+        f_val.write(content)
