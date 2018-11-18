@@ -20,7 +20,7 @@ from keras.utils import multi_gpu_model
 
 class YOLO(object):
     _defaults = {
-        "model_path": 'logs/000/trained_weights_final.h5',
+        "model_path": 'logs/002/trained_weights_final.h5',
         "anchors_path": 'model_data/yolo_anchors.txt',
         "classes_path": 'model_data/welding_classes.txt',
         "score" : 0.3,
@@ -137,8 +137,8 @@ class YOLO(object):
             ellipse_x_true = int((box_true[0] + box_true[2]) / 2)
             ellipse_y_true = int((box_true[1] + box_true[3]) / 2)
 
-            draw.rectangle([(ellipse_x_true - 8, ellipse_y_true - 8), (ellipse_x_true + 8, ellipse_y_true + 8)],
-                         fill=(128))
+            draw.rectangle([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
+                         fill=(255,0,0))
             del draw
 
         for i, c in reversed(list(enumerate(out_classes))):
@@ -170,7 +170,7 @@ class YOLO(object):
             ellipse_x = int((left + right) / 2)
             ellipse_y = int((top + bottom) / 2)
 
-            draw.ellipse([(ellipse_x-5,ellipse_y-5),(ellipse_x+5,ellipse_y+5)],fill=(0))
+            draw.ellipse([(ellipse_x-5,ellipse_y-5),(ellipse_x+5,ellipse_y+5)],fill=(0,255,0))
             draw.rectangle([tuple(text_origin), tuple(text_origin + label_size)],fill=(0))
 #                            self.colors[c])
             draw.text(text_origin, label, fill=(255),font=font)

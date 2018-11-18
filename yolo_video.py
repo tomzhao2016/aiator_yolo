@@ -19,7 +19,7 @@ from PIL import Image
 
 # rewrite this function
 def detect_img(yolo):
-    annotation_path = '/home/qingyang/aiator/data/image_annotation_test.txt'
+    annotation_path = '/home/qingyang/aiator/data/image_annotation_val.txt'
     with open(annotation_path) as f:
         lines = f.readlines()
 
@@ -31,7 +31,7 @@ def detect_img(yolo):
         try:
             # image = Image.open(img)
             line = lines[i].split()
-            image = Image.open(line[0])
+            image = Image.open(line[0]).convert('RGB')
             box = [list(map(int, box.split(','))) for box in line[1:]]
             print(box)
         except:
