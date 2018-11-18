@@ -15,8 +15,8 @@ from yolo3.utils import get_random_data
 
 def _main():
     train_annotation_path = '/home/qingyang/aiator/data/image_annotation_train.txt'
-    test_annotation_path = '/home/qingyang/aiator/data/image_annotation_test.txt'
-    log_dir = 'logs/001/'
+    test_annotation_path = '/home/qingyang/aiator/data/image_annotation_val.txt'
+    log_dir = 'logs/002/'
     classes_path = 'model_data/welding_classes.txt'
     anchors_path = 'model_data/yolo_anchors.txt'
     class_names = get_classes(classes_path)
