@@ -34,6 +34,13 @@ for i in range(len(lines_train)):
         new_box.append(box[0])
         new_box.append(img_height-box[3])
         new_box.append(box[2])
+
+        ellipse_x = int((new_box[0] + new_box[2]) / 2)
+        ellipse_y = int((new_box[1] + new_box[3]) / 2)
+        draw = ImageDraw.Draw(image)
+        draw.ellipse([(ellipse_x - 10, ellipse_y - 10), (ellipse_x + 10, ellipse_y + 10)], fill=(0))
+        del draw
+
         if i == 0:
             new_box.append(3)
         else: new_box.append(4)
@@ -48,7 +55,7 @@ for i in range(len(lines_val)):
     line = lines_val[i].split()
     image = Image.open(line[0])
     img_width,img_height = image.size
-    image.rotate(90)
+    image = image.rotate(90)
     path = os.path.join(val_path,'rotate_'+os.path.split(line[0])[-1])
 
     boxes = [list(map(int, box.split(','))) for box in line[1:]]
@@ -59,11 +66,11 @@ for i in range(len(lines_val)):
         new_box.append(box[0])
         new_box.append(img_height-box[3])
         new_box.append(box[2])
+
         ellipse_x = int((new_box[0]+new_box[2])/2)
         ellipse_y = int((new_box[1]+new_box[3])/2)
-
         draw = ImageDraw.Draw(image)
-        draw.ellipse([( ellipse_x- 5, ellipse_y - 5), (ellipse_x + 5, ellipse_y + 5)], fill=(0))
+        draw.ellipse([( ellipse_x- 10, ellipse_y - 10), (ellipse_x + 10, ellipse_y + 10)], fill=(0))
         del draw
 
         if i == 0:
