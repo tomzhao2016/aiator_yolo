@@ -18,21 +18,20 @@ with open(annotation_path_test) as f_val:
     lines_val = f_val.readlines()
 
 
-# rotate clockwise
+# transpose
 for i in range(len(lines_train)):
     line = lines_train[i].split()
     image = Image.open(line[0])
-    img_width,img_height = image.size
-    image = image.rotate(90)
+
+    image = image.transpose(90)
     path = os.path.join(train_path,'rotate_'+os.path.split(line[0])[-1])
-    image.save(path)
     boxes = [list(map(int, box.split(','))) for box in line[1:]]
     new_boxes = []
     for i,box in enumerate(boxes):
         new_box = []
-        new_box.append(img_height-box[1])
+        new_box.append(box[1])
         new_box.append(box[0])
-        new_box.append(img_height-box[3])
+        new_box.append(box[3])
         new_box.append(box[2])
 
         ellipse_x = int((new_box[0] + new_box[2]) / 2)
@@ -45,6 +44,8 @@ for i in range(len(lines_train)):
             new_box.append(3)
         else: new_box.append(4)
         new_boxes.append(new_box)
+
+    image.save(path)
     content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
     # save into annotation
     with open(annotation_path_train,'a') as f_train:
@@ -54,17 +55,17 @@ for i in range(len(lines_train)):
 for i in range(len(lines_val)):
     line = lines_val[i].split()
     image = Image.open(line[0])
-    img_width,img_height = image.size
-    image = image.rotate(90)
+
+    image = image.transpose(90)
     path = os.path.join(val_path,'rotate_'+os.path.split(line[0])[-1])
 
     boxes = [list(map(int, box.split(','))) for box in line[1:]]
     new_boxes = []
     for i,box in enumerate(boxes):
         new_box = []
-        new_box.append(img_height-box[1])
+        new_box.append(box[1])
         new_box.append(box[0])
-        new_box.append(img_height-box[3])
+        new_box.append(box[3])
         new_box.append(box[2])
 
         ellipse_x = int((new_box[0]+new_box[2])/2)
