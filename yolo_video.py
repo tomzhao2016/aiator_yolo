@@ -19,11 +19,11 @@ from PIL import Image
 
 # rewrite this function
 def detect_img(yolo):
-    annotation_path = '/home/qingyang/aiator/data/image_annotation_train.txt'
+    annotation_path = '/home/qingyang/aiator/data/image_annotation_test.txt'
     with open(annotation_path) as f:
         lines = f.readlines()
 
-    for i in range(1,10):
+    for i in range(len(lines)):
         # img = '/home/qingyang/aiator/data/location_images/train/'+str(i)+'.bmp'
 
        
@@ -39,7 +39,7 @@ def detect_img(yolo):
             continue
         else:
             r_image = yolo.detect_image(image,box)
-            r_image.save('results_tiny/detected_'+str(i)+'.jpg')
+            r_image.save('results_test/detected_'+str(i)+'.jpg')
             print(str(i)+' is detected!')
 #     yolo.close_session()
 
