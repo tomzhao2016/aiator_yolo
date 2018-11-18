@@ -3,6 +3,7 @@
  # path/to/img1.jpg 50,100,150,200,0 30,50,200,120,3
  # path/to/img2.jpg 120,300,250,600,2
 import os
+from PIL import Image,ImageDraw
 
 ####
 #### Read/Create files
@@ -84,3 +85,88 @@ for cnt in range(91,101):
     x_2_min,x_2_max,y_2_min,y_2_max = c2b(x_2,y_2)
     content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(1)+'\n'
     f_test.write(content_1)
+
+
+
+# this file is to save augmented data
+train_path = '/home/qingyang/aiator/data/location_images/train'
+val_path = '/home/qingyang/aiator/data/location_images/val'
+
+# augmentation including rotation (90 degree)
+
+# read images/bounding boxes
+annotation_path_train = '/home/qingyang/aiator/data/image_annotation_train.txt'
+annotation_path_test = '/home/qingyang/aiator/data/image_annotation_test.txt'
+
+with open(annotation_path_train) as f_train:
+    lines_train = f_train.readlines()
+
+with open(annotation_path_test) as f_val:
+    lines_val = f_val.readlines()
+
+
+# transpose
+for i in range(len(lines_train)):
+    line = lines_train[i].split()
+    image = Image.open(line[0])
+
+    image = image.transpose(Image.TRANSPOSE)
+    path = os.path.join(train_path,'rotate_'+os.path.split(line[0])[-1])
+    boxes = [list(map(int, box.split(','))) for box in line[1:]]
+    new_boxes = []
+    for i,box in enumerate(boxes):
+        new_box = []
+        new_box.append(box[1])
+        new_box.append(box[0])
+        new_box.append(box[3])
+        new_box.append(box[2])
+
+        # ellipse_x = int((new_box[0] + new_box[2]) / 2)
+        # ellipse_y = int((new_box[1] + new_box[3]) / 2)
+        # draw = ImageDraw.Draw(image)
+        # draw.ellipse([(ellipse_x - 10, ellipse_y - 10), (ellipse_x + 10, ellipse_y + 10)], fill=(0))
+        # del draw
+
+        if i == 0:
+            new_box.append(3)
+        else: new_box.append(4)
+        new_boxes.append(new_box)
+
+    image.save(path)
+    content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
+    # save into annotation
+    with open(annotation_path_train,'a') as f_train:
+        f_train.write(content)
+
+# rotate clockwise
+for i in range(len(lines_val)):
+    line = lines_val[i].split()
+    image = Image.open(line[0])
+
+    image = image.transpose(Image.TRANSPOSE)
+    path = os.path.join(val_path,'rotate_'+os.path.split(line[0])[-1])
+
+    boxes = [list(map(int, box.split(','))) for box in line[1:]]
+    new_boxes = []
+    for i,box in enumerate(boxes):
+        new_box = []
+        new_box.append(box[1])
+        new_box.append(box[0])
+        new_box.append(box[3])
+        new_box.append(box[2])
+
+        # ellipse_x = int((new_box[0]+new_box[2])/2)
+        # ellipse_y = int((new_box[1]+new_box[3])/2)
+        # draw = ImageDraw.Draw(image)
+        # draw.ellipse([( ellipse_x- 10, ellipse_y - 10), (ellipse_x + 10, ellipse_y + 10)], fill=(0))
+        # del draw
+
+        if i == 0:
+            new_box.append(3)
+        else: new_box.append(4)
+        new_boxes.append(new_box)
+    image.save(path)
+    content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
+    # save into annotation
+    with open(annotation_path_test,'a') as f_test:
+        f_test.write(content)
