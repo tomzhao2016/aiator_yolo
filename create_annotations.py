@@ -127,8 +127,8 @@ for i in range(len(lines_train)):
         # del draw
 
         if i == 0:
-            new_box.append(3)
-        else: new_box.append(4)
+            new_box.append(2)
+        else: new_box.append(3)
         new_boxes.append(new_box)
 
     image.save(path)
