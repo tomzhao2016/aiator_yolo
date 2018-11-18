@@ -38,7 +38,7 @@ for i in range(len(lines_train)):
             new_box.append(3)
         else: new_box.append(4)
         new_boxes.append(new_box)
-    content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])
+    content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
     # save into annotation
     with open(annotation_path_train,'a') as f_train:
         f_train.write(content)
@@ -71,7 +71,7 @@ for i in range(len(lines_val)):
         else: new_box.append(4)
         new_boxes.append(new_box)
     image.save(path)
-    content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])
+    content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
     # save into annotation
     with open(annotation_path_test,'a') as f_test:
         f_test.write(content)
