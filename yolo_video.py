@@ -19,26 +19,23 @@ from PIL import Image
 
 # rewrite this function
 def detect_img(yolo):
-    annotation_path = '/home/qingyang/aiator/data/image_annotation_val.txt'
-    with open(annotation_path) as f:
-        lines = f.readlines()
-
-    for i in range(len(lines)):
-        # img = '/home/qingyang/aiator/data/location_images/train/'+str(i)+'.bmp'
-
-       
-#         img = '../data/huizhou/pos1/'+str(i)+'.bmp'
+    # annotation_path = '/home/qingyang/aiator/data/image_annotation_val.txt'
+    # with open(annotation_path) as f:
+    #     lines = f.readlines()
+    ids = [22,32,38,42,86,88,92,95,103]
+    for i in ids:
+        img = '/home/qingyang/aiator/data/test_images/'+str(i)+'.bmp'
         try:
-            # image = Image.open(img)
-            line = lines[i].split()
-            image = Image.open(line[0]).convert('RGB')
-            box = [list(map(int, box.split(','))) for box in line[1:]]
-            print(box)
+            image = Image.open(img).convert('RGB')
+            # line = lines[i].split()
+            # image = Image.open(line[0]).convert('RGB')
+            # box = [list(map(int, box.split(','))) for box in line[1:]]
+            # print(box)
         except:
             print('Open Error! Try again!')
             continue
         else:
-            r_image = yolo.detect_image(image,box)
+            r_image = yolo.detect_image(image,test=False,box_true=None)
             r_image.save('results_test/detected_'+str(i)+'.jpg')
             print(str(i)+' is detected!')
 #     yolo.close_session()

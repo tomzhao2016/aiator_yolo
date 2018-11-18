@@ -99,7 +99,7 @@ class YOLO(object):
                 score_threshold=self.score, iou_threshold=self.iou)
         return boxes, scores, classes
 
-    def detect_image(self, image, boxes_true):
+    def detect_image(self, image, boxes_true, test = False):
         start = timer()
 
         if self.model_image_size != (None, None):
@@ -130,16 +130,16 @@ class YOLO(object):
                     size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
         thickness = (image.size[0] + image.size[1]) // 300
 
+        if not test:
+            for box_true in boxes_true:
+                draw = ImageDraw.Draw(image)
 
-        for box_true in boxes_true:
-            draw = ImageDraw.Draw(image)
+                ellipse_x_true = int((box_true[0] + box_true[2]) / 2)
+                ellipse_y_true = int((box_true[1] + box_true[3]) / 2)
 
-            ellipse_x_true = int((box_true[0] + box_true[2]) / 2)
-            ellipse_y_true = int((box_true[1] + box_true[3]) / 2)
-
-            draw.rectangle([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
-                         fill=(0,255,0))
-            del draw
+                draw.rectangle([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
+                             fill=(0,255,0))
+                del draw
 
         for i, c in reversed(list(enumerate(out_classes))):
             predicted_class = self.class_names[c]
