@@ -23,7 +23,7 @@ for i in range(len(lines_train)):
     line = lines_train[i].split()
     image = Image.open(line[0])
     img_width,img_height = image.size
-    image.rotate(90)
+    image = image.rotate(90)
     path = os.path.join(train_path,'rotate_'+os.path.split(line[0])[-1])
     image.save(path)
     boxes = [list(map(int, box.split(','))) for box in line[1:]]
