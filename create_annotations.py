@@ -73,7 +73,7 @@ for cnt in range(101,105):
     f_train.write(content_1)
 
 for cnt in range(91,101):
-    temp_path = os.path.join('/home/qingyang/aiator/data/location_images/test',str(cnt)+'.bmp')
+    temp_path = os.path.join('/home/qingyang/aiator/data/location_images/val',str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
 
     x_1 = temp_coordinate[0]
