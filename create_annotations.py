@@ -9,13 +9,19 @@ from PIL import Image,ImageDraw
 #### Read/Create files
 ####
 
+# read images/bounding boxes
+# this file is to save augmented data
+train_path = '/home/qingyang/aiator/data/location_images/train'
+val_path = '/home/qingyang/aiator/data/location_images/val'
+annotation_path_train = '/home/qingyang/aiator/data/image_annotation_train.txt'
+annotation_path_val = '/home/qingyang/aiator/data/image_annotation_val.txt'
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 # create new file
-f_train = open("/home/qingyang/aiator/data/image_annotation_train.txt", "x")
-f_train = open("/home/qingyang/aiator/data/image_annotation_train.txt", "a")
+f_train = open(annotation_path_train, "x")
+f_train = open(annotation_path_train, "a")
 
-f_test = open("/home/qingyang/aiator/data/image_annotation_test.txt", "x")
-f_test = open("/home/qingyang/aiator/data/image_annotation_test.txt", "a")
+f_val = open(annotation_path_val, "x")
+f_val = open(annotation_path_val, "a")
 
 # read loaction file
 l_f = open('/home/qingyang/aiator/data/location_images/targetLocation.csv','r')
@@ -47,7 +53,7 @@ def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 100, y_offset = 100):
 
 #
 for cnt in range(1,91):
-    temp_path = os.path.join('/home/qingyang/aiator/data/location_images/train',str(cnt)+'.bmp')
+    temp_path = os.path.join(train_path,str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
 
     x_1 = temp_coordinate[0]
@@ -61,7 +67,7 @@ for cnt in range(1,91):
 
 
 for cnt in range(101,105):
-    temp_path = os.path.join('/home/qingyang/aiator/data/location_images/train',str(cnt)+'.bmp')
+    temp_path = os.path.join(train_path,str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
 
     x_1 = temp_coordinate[0]
@@ -74,7 +80,7 @@ for cnt in range(101,105):
     f_train.write(content_1)
 
 for cnt in range(91,101):
-    temp_path = os.path.join('/home/qingyang/aiator/data/location_images/val',str(cnt)+'.bmp')
+    temp_path = os.path.join(val_path,str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
 
     x_1 = temp_coordinate[0]
@@ -84,25 +90,16 @@ for cnt in range(91,101):
     x_1_min,x_1_max,y_1_min,y_1_max = c2b(x_1,y_1)
     x_2_min,x_2_max,y_2_min,y_2_max = c2b(x_2,y_2)
     content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(1)+'\n'
-    f_test.write(content_1)
-
-
-
-# this file is to save augmented data
-train_path = '/home/qingyang/aiator/data/location_images/train'
-val_path = '/home/qingyang/aiator/data/location_images/val'
+    f_val.write(content_1)
 
 # augmentation including rotation (90 degree)
 
-# read images/bounding boxes
-annotation_path_train = '/home/qingyang/aiator/data/image_annotation_train.txt'
-annotation_path_test = '/home/qingyang/aiator/data/image_annotation_test.txt'
 
-with open(annotation_path_train) as f_train:
-    lines_train = f_train.readlines()
 
-with open(annotation_path_test) as f_val:
-    lines_val = f_val.readlines()
+# with open(annotation_path_train) as f_train:
+lines_train = f_train.readlines()
+# with open(annotation_path_test) as f_val:
+lines_val = f_val.readlines()
 
 
 # transpose
@@ -135,10 +132,10 @@ for i in range(len(lines_train)):
     image.save(path)
     content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
     # save into annotation
-    with open(annotation_path_train,'a') as f_train:
-        f_train.write(content)
+    # with open(annotation_path_train,'a') as f_train:
+    f_train.write(content)
 
-# rotate clockwise
+# transpose
 for i in range(len(lines_val)):
     line = lines_val[i].split()
     image = Image.open(line[0])
@@ -168,5 +165,5 @@ for i in range(len(lines_val)):
     image.save(path)
     content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
     # save into annotation
-    with open(annotation_path_test,'a') as f_test:
-        f_test.write(content)
+    # with open(annotation_path_test,'a') as f_test:
+    f_val.write(content)
