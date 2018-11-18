@@ -161,8 +161,8 @@ for i in range(len(lines_val)):
         # del draw
 
         if i == 0:
-            new_box.append(3)
-        else: new_box.append(4)
+            new_box.append(2)
+        else: new_box.append(3)
         new_boxes.append(new_box)
     image.save(path)
     content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
