@@ -23,7 +23,7 @@ for i in range(len(lines_train)):
     line = lines_train[i].split()
     image = Image.open(line[0])
 
-    image = image.transpose()
+    image = image.transpose(Image.TRANSPOSE)
     path = os.path.join(train_path,'rotate_'+os.path.split(line[0])[-1])
     boxes = [list(map(int, box.split(','))) for box in line[1:]]
     new_boxes = []
@@ -56,7 +56,7 @@ for i in range(len(lines_val)):
     line = lines_val[i].split()
     image = Image.open(line[0])
 
-    image = image.transpose()
+    image = image.transpose(Image.TRANSPOSE)
     path = os.path.join(val_path,'rotate_'+os.path.split(line[0])[-1])
 
     boxes = [list(map(int, box.split(','))) for box in line[1:]]
