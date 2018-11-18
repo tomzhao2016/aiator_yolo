@@ -35,7 +35,7 @@ def detect_img(yolo):
             print('Open Error! Try again!')
             continue
         else:
-            r_image = yolo.detect_image(image,test=False,boxes_true=None)
+            r_image = yolo.detect_image(image,test=True,boxes_true=None)
             r_image.save('results_test/detected_'+str(i)+'.jpg')
             print(str(i)+' is detected!')
 #     yolo.close_session()
