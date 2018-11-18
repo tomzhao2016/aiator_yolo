@@ -62,7 +62,7 @@ for cnt in range(1,91):
     y_2 = temp_coordinate[3]
     x_1_min,x_1_max,y_1_min,y_1_max = c2b(x_1,y_1)
     x_2_min,x_2_max,y_2_min,y_2_max = c2b(x_2,y_2)
-    content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(1)+'\n'
+    content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(0)+'\n'
     f_train.write(content_1)
 
 
@@ -76,7 +76,7 @@ for cnt in range(101,105):
     y_2 = temp_coordinate[3]
     x_1_min,x_1_max,y_1_min,y_1_max = c2b(x_1,y_1)
     x_2_min,x_2_max,y_2_min,y_2_max = c2b(x_2,y_2)
-    content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(1)+'\n'
+    content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(0)+'\n'
     f_train.write(content_1)
 
 for cnt in range(91,101):
@@ -89,7 +89,7 @@ for cnt in range(91,101):
     y_2 = temp_coordinate[3]
     x_1_min,x_1_max,y_1_min,y_1_max = c2b(x_1,y_1)
     x_2_min,x_2_max,y_2_min,y_2_max = c2b(x_2,y_2)
-    content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(1)+'\n'
+    content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(0)+'\n'
     f_val.write(content_1)
 
 # augmentation including rotation (90 degree)
@@ -127,8 +127,8 @@ for i in range(len(lines_train)):
         # del draw
 
         if i == 0:
-            new_box.append(2)
-        else: new_box.append(3)
+            new_box.append(0)
+        else: new_box.append(0)
         new_boxes.append(new_box)
 
     image.save(path)
@@ -161,8 +161,8 @@ for i in range(len(lines_val)):
         # del draw
 
         if i == 0:
-            new_box.append(2)
-        else: new_box.append(3)
+            new_box.append(0)
+        else: new_box.append(0)
         new_boxes.append(new_box)
     image.save(path)
     content = path+' '+','.join(str(a) for a in new_boxes[0])+' '+','.join(str(a) for a in new_boxes[1])+'\n'
