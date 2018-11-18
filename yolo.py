@@ -138,7 +138,7 @@ class YOLO(object):
             ellipse_y_true = int((box_true[1] + box_true[3]) / 2)
 
             draw.rectangle([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
-                         fill=(255,0,0))
+                         fill=(0,255,0))
             del draw
 
         for i, c in reversed(list(enumerate(out_classes))):
@@ -170,10 +170,10 @@ class YOLO(object):
             ellipse_x = int((left + right) / 2)
             ellipse_y = int((top + bottom) / 2)
 
-            draw.ellipse([(ellipse_x-5,ellipse_y-5),(ellipse_x+5,ellipse_y+5)],fill=(0,255,0))
+            draw.ellipse([(ellipse_x-5,ellipse_y-5),(ellipse_x+5,ellipse_y+5)],fill=(255,0,0))
             draw.rectangle([tuple(text_origin), tuple(text_origin + label_size)],fill=(0))
 #                            self.colors[c])
-            draw.text(text_origin, label, fill=(255),font=font)
+            draw.text(text_origin, label, fill=(255,255,255),font=font)
 #                                                 , 0, 0), font=font)
             del draw
         end = timer()
