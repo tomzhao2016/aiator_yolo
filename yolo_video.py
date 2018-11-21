@@ -22,9 +22,9 @@ def detect_img(yolo):
     # annotation_path = '/home/qingyang/aiator/data/image_annotation_val.txt'
     # with open(annotation_path) as f:
     #     lines = f.readlines()
-    ids = [20181106142906050,20181106143433440,20181106143824597,20181106144053796,20181106144327859]
-    for i in ids:
-        img = '/home/qingyang/aiator/data/huizhou/pos1/'+str(i)+'.bmp'
+    # ids = [20181106142906050,20181106143433440,20181106143824597,20181106144053796,20181106144327859]
+    for i in range(1,21):
+        img = '/home/qingyang/aiator/data/huizhou_2/'+str(i)+'.bmp'
         try:
             image = Image.open(img).convert('RGB')
             # line = lines[i].split()
