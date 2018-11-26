@@ -41,7 +41,7 @@ for cnt in range(line_nb):
         center_coordinate.append(list(map(str, l_f.readline().strip().split(","))))
 
 # TODO: row_size and col_size hard-code
-def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 150, y_offset = 30):
+def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 100, y_offset = 100):
 
     ## center to bounding box(x_min,x_max,y_min,y_max)
     x_min = max(x - x_offset, 0)
