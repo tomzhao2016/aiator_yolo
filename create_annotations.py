@@ -163,7 +163,7 @@ for i in range(len(lines_val)):
         ellipse_x_true = int((new_box[0] + new_box[2]) / 2)
         ellipse_y_true = int((new_box[1] + new_box[3]) / 2)
 
-        draw.rectangle([(ellipse_x_true - 50, ellipse_y_true - 10), (ellipse_x_true + 50, ellipse_y_true + 10)],
+        draw.rectangle([(ellipse_x_true - 30, ellipse_y_true - 150), (ellipse_x_true + 30, ellipse_y_true + 150)],
                            fill=(255))
         del draw
 
