@@ -158,6 +158,13 @@ for i in range(len(lines_val)):
         ellipse_y = int((new_box[1]+new_box[3])/2)
         draw = ImageDraw.Draw(image)
         draw.ellipse([( ellipse_x- 10, ellipse_y - 10), (ellipse_x + 10, ellipse_y + 10)], fill=(0))
+
+
+        ellipse_x_true = int((new_box[0] + new_box[2]) / 2)
+        ellipse_y_true = int((new_box[1] + new_box[3]) / 2)
+
+        draw.rectangle([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
+                           fill=(0, 255, 0))
         del draw
 
         if i == 0:
