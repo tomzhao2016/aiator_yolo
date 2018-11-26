@@ -164,7 +164,7 @@ for i in range(len(lines_val)):
         ellipse_y_true = int((new_box[1] + new_box[3]) / 2)
 
         draw.rectangle([(ellipse_x_true - 5, ellipse_y_true - 5), (ellipse_x_true + 5, ellipse_y_true + 5)],
-                           fill=(0, 255, 0))
+                           fill=(255))
         del draw
 
         if i == 0:
