@@ -41,7 +41,7 @@ for cnt in range(line_nb):
         center_coordinate.append(list(map(str, l_f.readline().strip().split(","))))
 
 # TODO: row_size and col_size hard-code
-def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 100, y_offset = 100):
+def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 50, y_offset = 10):
 
     ## center to bounding box(x_min,x_max,y_min,y_max)
     x_min = max(x - x_offset, 0)
@@ -154,11 +154,11 @@ for i in range(len(lines_val)):
         new_box.append(box[3])
         new_box.append(box[2])
 
-        # ellipse_x = int((new_box[0]+new_box[2])/2)
-        # ellipse_y = int((new_box[1]+new_box[3])/2)
-        # draw = ImageDraw.Draw(image)
-        # draw.ellipse([( ellipse_x- 10, ellipse_y - 10), (ellipse_x + 10, ellipse_y + 10)], fill=(0))
-        # del draw
+        ellipse_x = int((new_box[0]+new_box[2])/2)
+        ellipse_y = int((new_box[1]+new_box[3])/2)
+        draw = ImageDraw.Draw(image)
+        draw.ellipse([( ellipse_x- 10, ellipse_y - 10), (ellipse_x + 10, ellipse_y + 10)], fill=(0))
+        del draw
 
         if i == 0:
             new_box.append(0)
