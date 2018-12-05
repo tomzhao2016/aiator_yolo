@@ -1,7 +1,12 @@
- # This file will write the true annotations to a txt file named 'image_annotation'
+ # This file create ANNOTATIONS for images
+ # And also create ROTATE_IMAGES(90 degree, clockwise) and its  ANNOTATIONS
  # In the txt, the format should be
- # path/to/img1.jpg 50,100,150,200,0 30,50,200,120,3
- # path/to/img2.jpg 120,300,250,600,2
+ # path/to/img1.jpg x_min,y_min,x_max,y_max,class_id x_min,y_min,x_max,y_max,class_id
+
+# USAGE: first set correct path in [TODO],
+# then run this file in terminal
+# Note: Before runnning, make sure u have 'targetLocation.csv' like format
+
 import os
 from PIL import Image,ImageDraw
 
@@ -10,12 +15,21 @@ from PIL import Image,ImageDraw
 ####
 
 # read images/bounding boxes
-# this file is to save augmented data
-train_path = '/home/qingyang/aiator/data/location_images/train'
-val_path = '/home/qingyang/aiator/data/location_images/val'
-annotation_path_train = '/home/qingyang/aiator/data/image_annotation_train.txt'
-annotation_path_val = '/home/qingyang/aiator/data/image_annotation_val.txt'
+# TODO:Set to DATA path
+train_path = '/home/mx/qingyang/data/aiator_data/location_images/train'
+val_path = '/home/mx/qingyang/data/aiator_data/location_images/val'
+# TODO: Set annotation path (labels)
+l_f = open('/home/mx/qingyang/data/aiator_data/location_images/targetLocation.csv','r')
+
+# TODO:Set to DATA ANNOTATION path
+annotation_path_train = '/home/mx/qingyang/data/aiator_data/ssd_train.txt'
+annotation_path_val = '/home/mx/qingyang/data/aiator_data/ssd_val.txt'
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+# TODO[NEW DATASET ONLY]: HARD-CODING params
+line_nb = 105 # number of lines in label file
+ROW_SIZE = 1624 # image width
+COL_SIZE = 1236 # image height
 # create new file
 f_train = open(annotation_path_train, "x")
 f_train = open(annotation_path_train, "a")
@@ -23,16 +37,12 @@ f_train = open(annotation_path_train, "a")
 f_val = open(annotation_path_val, "x")
 f_val = open(annotation_path_val, "a")
 
-# read loaction file
-l_f = open('/home/qingyang/aiator/data/location_images/targetLocation.csv','r')
 
 ####
 #### initialize center_coordinate
 ####
 
 # first line is headings
-# TODO: hard_code for line_nb 105
-line_nb = 105
 center_coordinate = []
 for cnt in range(line_nb):
     if cnt > 0:
@@ -40,8 +50,8 @@ for cnt in range(line_nb):
     else:
         center_coordinate.append(list(map(str, l_f.readline().strip().split(","))))
 
-# TODO: row_size and col_size hard-code
-def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 100, y_offset = 100):
+
+def c2b(x, y, row_size = ROW_SIZE, col_size = COL_SIZE, x_offset = 100, y_offset = 100):
 
     ## center to bounding box(x_min,x_max,y_min,y_max)
     x_min = max(x - x_offset, 0)
@@ -51,7 +61,8 @@ def c2b(x, y, row_size = 1624, col_size = 1236, x_offset = 100, y_offset = 100):
     return (int(x_min),int(x_max),int(y_min),int(y_max))
 
 
-#
+# TODO[NEW DATASET ONLY]: if using different dataset to train yolo, temp path should change
+# training data annotation
 for cnt in range(1,91):
     temp_path = os.path.join(train_path,str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
@@ -65,7 +76,7 @@ for cnt in range(1,91):
     content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(0)+'\n'
     f_train.write(content_1)
 
-
+# training data annotation
 for cnt in range(101,105):
     temp_path = os.path.join(train_path,str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
@@ -79,6 +90,7 @@ for cnt in range(101,105):
     content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(0)+'\n'
     f_train.write(content_1)
 
+# validation data annotation
 for cnt in range(91,101):
     temp_path = os.path.join(val_path,str(cnt)+'.bmp')
     temp_coordinate = center_coordinate[cnt]
@@ -92,11 +104,10 @@ for cnt in range(91,101):
     content_1 = temp_path+' '+str(x_1_min)+','+str(y_1_min)+','+str(x_1_max)+','+str(y_1_max)+','+str(0)+' '+str(x_2_min)+','+str(y_2_min)+','+str(x_2_max)+','+str(y_2_max)+','+str(0)+'\n'
     f_val.write(content_1)
 
-# augmentation including rotation (90 degree)
-
-
 f_train.close()
 f_val.close()
+
+# augmentation including rotation (90 degree)
 
 with open(annotation_path_train) as f_train:
     lines_train = f_train.readlines()
@@ -104,7 +115,7 @@ with open(annotation_path_val) as f_val:
     lines_val = f_val.readlines()
 
 
-# transpose
+# transpose train
 for i in range(len(lines_train)):
     line = lines_train[i].split()
     image = Image.open(line[0])
@@ -120,6 +131,7 @@ for i in range(len(lines_train)):
         new_box.append(box[3])
         new_box.append(box[2])
 
+        # DRAW ground truth to TEST
         # ellipse_x = int((new_box[0] + new_box[2]) / 2)
         # ellipse_y = int((new_box[1] + new_box[3]) / 2)
         # draw = ImageDraw.Draw(image)
@@ -137,7 +149,7 @@ for i in range(len(lines_train)):
     with open(annotation_path_train,'a') as f_train:
         f_train.write(content)
 
-# transpose
+# transpose validation
 for i in range(len(lines_val)):
     line = lines_val[i].split()
     image = Image.open(line[0])
