@@ -25,7 +25,8 @@ def detect_img(yolo):
     # ids = [20181106142906050,20181106143433440,20181106143824597,20181106144053796,20181106144327859]
     # ids = [103,22,32,38,42,86,88,92,95]
     for i in range(1,21):
-        img = '/home/qingyang/aiator/data/huizhou_3/'+str(i)+'.bmp'
+        # TODO: PATH TO TEST IMAGES
+        img = '/home/mx/qingyang/data/huizhou_3/'+str(i)+'.bmp'
         try:
             image = Image.open(img).convert('RGB')
             # line = lines[i].split()
@@ -37,6 +38,7 @@ def detect_img(yolo):
             continue
         else:
             r_image = yolo.detect_image(image,test=True,boxes_true=None)
+            # TODO: PATH TO OUTPUT DOR
             r_image.save('results_test/detected_'+str(i)+'.jpg')
             print(str(i)+' is detected!')
 #     yolo.close_session()

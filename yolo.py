@@ -20,6 +20,7 @@ from keras.utils import multi_gpu_model
 
 class YOLO(object):
     _defaults = {
+        # TODO: change model path
         "model_path": 'logs/004/trained_weights_final.h5',
         "anchors_path": 'model_data/yolo_anchors.txt',
         "classes_path": 'model_data/welding_classes.txt',
