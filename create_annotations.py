@@ -22,8 +22,8 @@ val_path = '/home/mx/qingyang/data/aiator_data/location_images/val'
 l_f = open('/home/mx/qingyang/data/aiator_data/location_images/targetLocation.csv','r')
 
 # TODO:Set to DATA ANNOTATION path
-annotation_path_train = '/home/mx/qingyang/data/aiator_data/ssd_train.txt'
-annotation_path_val = '/home/mx/qingyang/data/aiator_data/ssd_val.txt'
+annotation_path_train = '/home/mx/qingyang/data/aiator_data/yolo_train.txt'
+annotation_path_val = '/home/mx/qingyang/data/aiator_data/yolo_val.txt'
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # TODO[NEW DATASET ONLY]: HARD-CODING params
